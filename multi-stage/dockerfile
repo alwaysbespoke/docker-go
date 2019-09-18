@@ -1,0 +1,12 @@
+#first stage - builder
+FROM golang:1.13.0-alpine as builder
+ADD . /app
+WORKDIR /app
+RUN CGO_ENABLED=0 GOOS=linux go build -o /main .
+#second stage
+FROM alpine:latest
+ENV PORT="8080"
+ENV HOST="localhost"
+COPY --from=builder /main .
+CMD ["./main"]
+EXPOSE 8080
