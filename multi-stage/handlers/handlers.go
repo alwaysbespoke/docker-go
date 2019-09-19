@@ -15,14 +15,12 @@ type EchoData struct {
 	Method  string      `json:"request_method"`
 	Path    string      `json:"request_path"`
 	Port    string      `json:"port"`
-	Host    string      `json:"host"`
 }
 
 // EchoHandler returns various data from the incoming request
 func EchoHandler(response http.ResponseWriter, request *http.Request) {
 
 	fmt.Println(os.Getenv("PORT"))
-	fmt.Println(os.Getenv("HOST"))
 	fmt.Println("REQUEST:\n", request)
 	fmt.Println()
 
@@ -61,7 +59,6 @@ func EchoHandler(response http.ResponseWriter, request *http.Request) {
 	echoData.Path = request.URL.Path
 	echoData.Body = string(body)
 	echoData.Port = os.Getenv("PORT")
-	echoData.Host = os.Getenv("HOST")
 
 	// marshal struct into json
 	j, err := json.Marshal(echoData)
